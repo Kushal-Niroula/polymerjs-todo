@@ -1,5 +1,7 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 
+import { updateTodo } from '../service/todo';
+
 /**
  * @customElement
  * @polymer
@@ -26,7 +28,7 @@ class TodoList extends PolymerElement {
       </style>
       <template is = "dom-repeat" items="[[todos]]">
       <div class = "todo-element">
-        <input type="checkbox" checked="[[item.isComplete]]" on-click="toggleComplete"/>
+        <input type="checkbox" checked="[[item.isComplete]]" value="[[item.isComplete]]" on-change="toggleComplete"/>
         <template is = "dom-if" if="[[item.isComplete]]">
         <span class="todo-text strike-through">[[item.text]] </span>
         </template>
@@ -39,10 +41,9 @@ class TodoList extends PolymerElement {
   }
 
   toggleComplete(event){
+    event.preventDefault();
     const index = event.model.index;
-    const newTodos = [...this.todos]
-    newTodos[index] = {...this.todos[index],isComplete:!this.todos[index].isComplete}
-    this.todos = newTodos
+    updateTodo(this.todos[index].id,{isComplete:!this.todos[index].isComplete})
 
   }
 

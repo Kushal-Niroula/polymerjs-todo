@@ -1,7 +1,8 @@
 {
   "name": "todo-app",
   "dependencies": {
-    "@polymer/polymer": "^3.0.0"
+    "@polymer/polymer": "^3.0.0",
+    "firebase": "^8.10.0"
   },
   "devDependencies": {
     "@polymer/test-fixture": "^4.0.2",

@@ -1,5 +1,7 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 
+import { setTodos } from '../service/todo';
+
 /**
  * @customElement
  * @polymer
@@ -12,7 +14,7 @@ class TodoFORM extends PolymerElement {
   handleSubmit(){
     const inputText = this.shadowRoot.querySelector('#todoText').value.trim();
     if(inputText){
-      this.todos = [...this.todos,{text:inputText,isComplete:false}]
+      setTodos({text:inputText,isComplete:false})
     } 
     this.shadowRoot.querySelector("#todoText").value = "";
   }
@@ -61,6 +63,9 @@ class TodoFORM extends PolymerElement {
   ready(){
     super.ready()
     this.shadowRoot.querySelector("#addTodo").addEventListener("click",this.handleSubmit)
+  }
+  disconnectedCallback(){
+    this.shadowRoot.querySelector('#addTodo').removeEventListener("click",this.handleSubmit)
   }
 }
 
